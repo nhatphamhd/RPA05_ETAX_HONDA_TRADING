@@ -1,0 +1,20 @@
+{
+  "client_code": "1000",
+  "machine": "x.y.z.w",
+  "service_mode": "10",
+  "system": "1100",
+  "version": "2020.10.3",
+  "framework_version": "standalone_v3.0",
+  "process_name_id": "p001_name",
+  "process_code": "p001",
+  "sisua_contact": "sisua.contact",
+  "client_name": "company.name",
+  "client_contact": "jane.doe",
+  "start_time": "2021-11-17 14:33:12",
+  "end_time": "2021-11-17 14:33:20",
+  "accumulated_exceptions": [
+    "System.Activities - UiPath.Core.BusinessRuleException: test rule exception |    at System.Activities.Statements.Throw.Execute(CodeActivityContext context) |    at System.Activities.CodeActivity.InternalExecute(ActivityInstance instance, ActivityExecutor executor, BookmarkManager bookmarkManager) |    at System.Activities.ActivityInstance.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager) |    at System.Activities.Runtime.ActivityExecutor.ExecuteActivityWorkItem.ExecuteBody(ActivityExecutor executor, BookmarkManager bookmarkManager, Location resultLocation)"
+  ],
+  "accumulated_retries": 1,
+  "result_code": "20000"
+}

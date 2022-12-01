@@ -1,0 +1,10 @@
+<br> Robot has finished execution for Process <b>{0}</b>.
+<br> Please find execution results as below:
+<span style='color:#4472C4'><b><br>
+<br> Kissflow #: {1}
+<br> Realization #: {2}
+<br> Steel ETAX #: {3}
+</b></span>
+<br> <p class=MsoNormal> You can check attachment for execution details.</p>
+<br> Thank you and have a great day ahead!
+<br>

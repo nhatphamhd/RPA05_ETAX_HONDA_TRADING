@@ -1,0 +1,5 @@
+<br> A fatal system exception has been occured when executing process <b>{0}</b>,
+<br> You can find the exception details as below:: 
+<br> <b>State</b>: {1} 
+<br> <b>Source</b>: {2} 
+<br> <b>Exception message</b>: {3}

@@ -1,0 +1,1598 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="excel_get_invoice_data" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="_strRequestETAXFile" Type="InArgument(x:String)" />
+    <x:Property Name="_dtiProcess" Type="InArgument(s:DateTime)" />
+    <x:Property Name="_dtaCustomerDefinition" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="_dtaTracking" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="_strTemplatePath" Type="InArgument(x:String)" />
+    <x:Property Name="_strUploadFolder" Type="InArgument(x:String)" />
+    <x:Property Name="_strCompletedFolder" Type="InArgument(x:String)" />
+    <x:Property Name="_strFailedFolder" Type="InArgument(x:String)" />
+  </x:Members>
+  <this:excel_get_invoice_data._dtiProcess>
+    <InArgument x:TypeArguments="s:DateTime" />
+  </this:excel_get_invoice_data._dtiProcess>
+  <this:excel_get_invoice_data._dtaCustomerDefinition>
+    <InArgument x:TypeArguments="sd:DataTable" />
+  </this:excel_get_invoice_data._dtaCustomerDefinition>
+  <this:excel_get_invoice_data._strCompletedFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:excel_get_invoice_data._strCompletedFolder>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1798,19272</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>excel_get_invoice_data_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="31">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="excel_steel_get_invoice_data" sap:VirtualizedContainerService.HintSize="1808,19067.3333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ui:WorkbookApplication" Name="wb" />
+      <Variable x:TypeArguments="x:Object" Name="objTotalRow" />
+      <Variable x:TypeArguments="x:String" Name="strSheetName" />
+      <Variable x:TypeArguments="x:String" Name="strTotalQty" />
+      <Variable x:TypeArguments="x:Int32" Name="intTotalRow" />
+      <Variable x:TypeArguments="x:String" Name="strTotalAmtBeforeTax" />
+      <Variable x:TypeArguments="x:String" Name="strTotalTaxAmt" />
+      <Variable x:TypeArguments="x:String" Name="strTotalAmtAfterTax" />
+      <Variable x:TypeArguments="x:Double" Name="dblInvoiceQty" />
+      <Variable x:TypeArguments="x:Double" Name="dblInvoiceAmtBeforeTax" />
+      <Variable x:TypeArguments="x:Double" Name="dblInvoiceTaxAmt" />
+      <Variable x:TypeArguments="x:Double" Name="dblInvoiceAmtAfterTax" />
+      <Variable x:TypeArguments="x:Boolean" Name="boolValidation" />
+      <Variable x:TypeArguments="x:Boolean" Name="boolParallel" />
+      <Variable x:TypeArguments="x:String" Name="strCustomerCode" />
+      <Variable x:TypeArguments="x:String" Name="strCompanyName" />
+      <Variable x:TypeArguments="x:String" Name="strCompanyAddress" />
+      <Variable x:TypeArguments="x:String" Name="strIssueDate" />
+      <Variable x:TypeArguments="x:String" Name="strErrorDetail" />
+      <Variable x:TypeArguments="x:String" Name="strInvoiceCode" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaInvoiceDetail" />
+      <Variable x:TypeArguments="x:Boolean" Name="boolReviseContent" />
+      <Variable x:TypeArguments="x:Int32" Name="idx" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaUploadInvoice" />
+      <Variable x:TypeArguments="x:String" Name="strTaxCode" />
+      <Variable x:TypeArguments="sd:DataRow" Name="dtrInvoiceItem" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1766,392.666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_17">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="473.333333333333,314" sap2010:WorkflowViewState.IdRef="Sequence_61">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:MultipleAssign DisplayName="init_args" sap:VirtualizedContainerService.HintSize="431.333333333333,222" sap2010:WorkflowViewState.IdRef="MultipleAssign_12">
+            <ui:MultipleAssign.AssignOperations>
+              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strRequestETAXFile]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">C:\Users\HTVOPSUSERS\RPA05_ETAXUpload\rsc\inputs\steel_requests\REQ FOMECO_STEEL BAR-Hieu-1026.xlsx</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_21">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="s:DateTime">[_dtiProcess]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="s:DateTime">[new DateTime(2022,10,26,00,00,00)]</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_43">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strUploadFolder]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">C:\Users\HTVOPSUSERS\RPA05_ETAXUpload\rsc\process_data\requests</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_44">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strTemplatePath]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">C:\Users\HTVOPSUSERS\RPA05_ETAXUpload\rsc\inputs\template.xlsx</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_45">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strCompletedFolder]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">C:\Users\HTVOPSUSERS\RPA05_ETAXUpload\rsc\inputs\steel_proceeded</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+              </scg:List>
+            </ui:MultipleAssign.AssignOperations>
+          </ui:MultipleAssign>
+        </Sequence>
+      </ui:CommentOut.Body>
+    </ui:CommentOut>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1766,238.666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_19">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="242,160" sap2010:WorkflowViewState.IdRef="Sequence_63">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="init_special" sap:VirtualizedContainerService.HintSize="200,68" sap2010:WorkflowViewState.IdRef="Sequence_60">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:BuildDataTable DataTable="[_dtaTracking]" DisplayName="init_datatable" sap:VirtualizedContainerService.HintSize="434,68.6666666666667" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;state&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;request&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;file&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;activity&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;status&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;reason&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+            <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[_dtaCustomerDefinition]" DisplayName="rr_customer_definition_list" sap:VirtualizedContainerService.HintSize="434,96.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="definition" WorkbookPath="C:\Users\HTVOPSUSERS\RPA05_ETAXUpload\rsc\inputs\customer_definition.xlsx" />
+            <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Key" DataTable="[_dtaCustomerDefinition]" DisplayName="adc_BP&amp;ProfitCenter" sap:VirtualizedContainerService.HintSize="434,198" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_2" />
+            <ui:ForEach x:TypeArguments="sd:DataRow" CurrentIndex="{x:Null}" DisplayName="fer__dtaCustomerDefinition" sap:VirtualizedContainerService.HintSize="434,208" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[_dtaCustomerDefinition.Rows]">
+              <ui:ForEach.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <Assign sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_55">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Object">[row("Key")]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Object">[row("Steel Section").ToString &amp; row("Mã khách hàng").ToString]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </ActivityAction>
+              </ui:ForEach.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEach>
+          </Sequence>
+        </Sequence>
+      </ui:CommentOut.Body>
+    </ui:CommentOut>
+    <ui:MultipleAssign DisplayName="init_params_value" sap:VirtualizedContainerService.HintSize="1766,232" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[strCustomerCode]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="sd:DataTable">[dtaInvoiceDetail]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="sd:DataTable">[new DataTable]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_19">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <ui:LogMessage DisplayName="log_init" sap:VirtualizedContainerService.HintSize="1766,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Bắt đầu trích xuất thông tin từ hóa đơn: &quot; &amp; _strRequestETAXFile &amp; &quot;...&quot;]" />
+    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtaUploadInvoice]" DisplayName="rr_template" sap:VirtualizedContainerService.HintSize="1766,96.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Dữ liệu" WorkbookPath="[_strTemplatePath]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ivk_excel_kill" sap:VirtualizedContainerService.HintSize="1766,123.333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="wfs\excel\excel_kill.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="eac_invoice" sap:VirtualizedContainerService.HintSize="1766,14372" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="0" Visible="False" Workbook="[wb]" WorkbookPath="[_strRequestETAXFile]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="extract_data" sap:VirtualizedContainerService.HintSize="1662.66666666667,14263.3333333333" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="strSectionCode" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign DisplayName="assign_wb_first_sheet" sap:VirtualizedContainerService.HintSize="1620.66666666667,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_2">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[strSheetName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[wb.GetSheets(0)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:ExcelReadCell Cell="K1" DisplayName="rc_company_code" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strCustomerCode]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="K2" DisplayName="rc_section_code" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_11" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strSectionCode]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="C12" DisplayName="rc_company_name" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_6" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strCompanyName]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="C13" DisplayName="rc_company_address" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_7" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strCompanyAddress]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="K5" DisplayName="rc_issued_date" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_8" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strIssueDate]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="K7" DisplayName="rc_code_in_invoice" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_9" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strInvoiceCode]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1620.66666666667,62" sap2010:WorkflowViewState.IdRef="CommentOut_9">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="668.666666666667,522" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[strCustomerCode = &quot;ZAO00004&quot;]" DisplayName="if_invoice_hvn" sap:VirtualizedContainerService.HintSize="338,62" sap2010:WorkflowViewState.IdRef="If_26">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <If Condition="[_strRequestETAXFile.Contains(&quot;VPC&quot;)]" DisplayName="if_inv_from_HMN" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_27">
+                        <If.Then>
+                          <Assign DisplayName="assign_vpc_code" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_52">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[strInvoiceCode]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[strInvoiceCode &amp;"_VPC1"]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                        </If.Then>
+                        <If.Else>
+                          <Assign DisplayName="assign_hmn_code" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_53">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[strInvoiceCode]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[strInvoiceCode &amp;"_HMN1"]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                        </If.Else>
+                      </If>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_30">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+            <ui:ExcelReadCell Cell="C14" DisplayName="rc_tax_code" sap:VirtualizedContainerService.HintSize="1620.66666666667,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_10" PreserveFormat="True" SheetName="[strSheetName]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[strTaxCode]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <If Condition="[Datetime.Parse(strIssueDate).ToString(&quot;ddMMyy&quot;) = _dtiProcess.ToString(&quot;ddMMyy&quot;)]" DisplayName="if_datetime_not_match" sap:VirtualizedContainerService.HintSize="1620.66666666667,13098.6666666667" sap2010:WorkflowViewState.IdRef="If_22">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="process_check_invoice" sap:VirtualizedContainerService.HintSize="1149.33333333333,12939.3333333333" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <TryCatch DisplayName="tc_lookup_information" sap:VirtualizedContainerService.HintSize="1107.33333333333,2006" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                    <TryCatch.Try>
+                      <Sequence DisplayName="try_lookup_customer_name" sap:VirtualizedContainerService.HintSize="1034,1033.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[_dtaCustomerDefinition]" DisplayName="lookup_datatable" sap:VirtualizedContainerService.HintSize="992,296" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Key" LookupValue="[strSectionCode.ToUpper &amp; strCustomerCode]" RowIndex="[idx]" />
+                        <If Condition="[strTaxCode.Replace(&quot; &quot;,&quot;&quot;).Trim.Replace(&quot;'&quot;, &quot;&quot;) = _dtaCustomerDefinition(idx)(&quot;Mã số thuế&quot;).ToString.Replace(&quot; &quot;,&quot;&quot;).Trim AndAlso _&#xA;strCompanyAddress.Trim.ToUpper = _dtaCustomerDefinition(idx)(&quot;Địa chỉ&quot;).ToString.Trim.ToUpper AndAlso _&#xA;strCompanyName.Trim.ToUpper = _dtaCustomerDefinition(idx)(&quot;Tên công ty&quot;).ToString.Trim.ToUpper]" DisplayName="if_general_information_match" sap:VirtualizedContainerService.HintSize="992,605.333333333333" sap2010:WorkflowViewState.IdRef="If_23">
+                          <If.Then>
+                            <ui:LogMessage DisplayName="log_check_ok" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_24" Level="Info" Message="[&quot;Thông tin chung (headers) của yêu cầu phát hành hóa đơn chính xác..&quot;]" />
+                          </If.Then>
+                          <If.Else>
+                            <Sequence DisplayName="log_headers_not_match" sap:VirtualizedContainerService.HintSize="612,446" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:LogMessage DisplayName="log_check_ok" sap:VirtualizedContainerService.HintSize="570,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_27" Level="Warn" Message="[&quot;Thông tin chung (headers) của yêu cầu phát hành hóa đơn chưa chính xác...&quot;]" />
+                              <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,220.666666666667" sap2010:WorkflowViewState.IdRef="If_24">
+                                <If.Then>
+                                  <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,61.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_47">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String">["Thông tin chung (headers) của yêu cầu phát hành hóa đơn chưa chính xác"]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Then>
+                                <If.Else>
+                                  <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,61.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_48">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String" xml:space="preserve">[strErrorDetail &amp; " ; " &amp;  " Thông tin chung (headers) của yêu cầu phát hành hóa đơn chưa chính xác"]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Else>
+                              </If>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="1038.66666666667,655.333333333333" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                          </ActivityAction.Argument>
+                          <Sequence DisplayName="catch_not_found_in_definition" sap:VirtualizedContainerService.HintSize="612,585.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="log_check_ok" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_25" Level="Warn" Message="[&quot;Thông tin chung (headers) của yêu cầu phát hành hóa đơn chưa được định nghĩa trong file definition...&quot;]" />
+                            <Assign DisplayName="assign__idx=-1" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_49">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Int32">[idx]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Int32">-1</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_25">
+                              <If.Then>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_50">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">["Thông tin chung (headers) của yêu cầu phát hành hóa đơn chưa được định nghĩa trong file definition"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_51">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[strErrorDetail &amp; " ; " &amp;  " Thông tin chung (headers) của yêu cầu phát hành hóa đơn chưa được định nghĩa trong file definition"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                  <Parallel DisplayName="parallel_process_vba_find_totalRow" sap:VirtualizedContainerService.HintSize="1107.33333333333,570.666666666667" sap2010:WorkflowViewState.IdRef="Parallel_1">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Parallel.CompletionCondition>[boolParallel = true]</Parallel.CompletionCondition>
+                    <Sequence DisplayName="catch_time_out" sap:VirtualizedContainerService.HintSize="400,514.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Delay DisplayName="delay_10_sec" Duration="00:00:10" sap:VirtualizedContainerService.HintSize="338,32" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                      <Throw DisplayName="throw_sys_exc" Exception="[New SystemException(&quot;Lỗi xử lý VBA: find_row_letter&quot;)]" sap:VirtualizedContainerService.HintSize="338,32" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                    </Sequence>
+                    <ui:RetryScope DisplayName="retry_check_done" sap:VirtualizedContainerService.HintSize="442,514.666666666667" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="1" RetryInterval="00:00:10">
+                      <ui:RetryScope.ActivityBody>
+                        <ActivityAction>
+                          <Sequence DisplayName="run_vba" sap:VirtualizedContainerService.HintSize="400,328.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:InvokeVBA sap2010:Annotation.AnnotationText="Tìm &quot;Tổng cộng (Total)&quot;" CodeFilePath="wfs\vba\find_row_letter.bas" DisplayName="ivk_find_total_row" EntryMethodName="findRow" EntryMethodParameters="[{&quot;Tổng cộng (Total)&quot;}]" sap:VirtualizedContainerService.HintSize="358,127.333333333333" sap2010:WorkflowViewState.IdRef="InvokeVBA_1" OutputValue="[objTotalRow]">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:InvokeVBA>
+                            <Assign DisplayName="assign_boolCheck" sap:VirtualizedContainerService.HintSize="358,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_3">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolParallel]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:RetryScope.ActivityBody>
+                      <ui:RetryScope.Condition>
+                        <ActivityFunc x:TypeArguments="x:Boolean" />
+                      </ui:RetryScope.Condition>
+                    </ui:RetryScope>
+                  </Parallel>
+                  <If Condition="[String.IsNullOrEmpty(Cstr(objTotalRow)) = True]" DisplayName="if_cannot_find_totalrow" sap:VirtualizedContainerService.HintSize="1107.33333333333,1512.66666666667" sap2010:WorkflowViewState.IdRef="If_1">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="not_proper_invoice" sap:VirtualizedContainerService.HintSize="400,304.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="log_not_proper_invoice" sap:VirtualizedContainerService.HintSize="358,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;Định dạng hóa đơn chưa chính xác: Không tìm thấy dòng Tổng cộng...&quot;]" />
+                        <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="358,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_13">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">Không nhận dạng được hóa đơn</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="process_invoice" sap:VirtualizedContainerService.HintSize="400,1343.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="temp_switch_flags" sap:VirtualizedContainerService.HintSize="358,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_29">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="temp_switch_flags" sap:VirtualizedContainerService.HintSize="358,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_6">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="assign_total_row" sap:VirtualizedContainerService.HintSize="358,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_5">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[intTotalRow]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[Cint(objTotalRow)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:ExcelReadRange AddHeaders="True" sap2010:Annotation.AnnotationText="Đọc tới cột M" DataTable="[dtaInvoiceDetail]" DisplayName="rr_read_invoice_range" sap:VirtualizedContainerService.HintSize="358,99.3333333333333" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" Range="[&quot;A17:M&quot; &amp; CInt(objTotalRow) - 2]" SheetName="[strSheetName]">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:ExcelReadRange>
+                        <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="358,62" sap2010:WorkflowViewState.IdRef="CommentOut_15">
+                          <ui:CommentOut.Body>
+                            <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="526,388.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_58">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If Condition="[_strRequestETAXFile.Contains(&quot;VPC1&quot;) or _strRequestETAXFile.Contains(&quot;HMN1&quot;)]" DisplayName="if_invoice_comes_from_hvn" sap:VirtualizedContainerService.HintSize="484,298.666666666667" sap2010:WorkflowViewState.IdRef="If_30">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <ui:ExcelReadRange AddHeaders="True" sap2010:Annotation.AnnotationText="Đọc tới cột J" DataTable="[dtaInvoiceDetail]" DisplayName="rr_read_invoice_range" sap:VirtualizedContainerService.HintSize="334,99.3333333333333" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="[&quot;A17:J&quot; &amp; CInt(objTotalRow) - 2]" SheetName="[strSheetName]">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:ExcelReadRange>
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                          </ui:CommentOut.Body>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:CommentOut>
+                        <ui:ExcelReadCell Cell="[&quot;E&quot; &amp; intTotalRow]" DisplayName="rc_total_qty" sap:VirtualizedContainerService.HintSize="358,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_2" PreserveFormat="True" SheetName="[strSheetName]">
+                          <ui:ExcelReadCell.Result>
+                            <OutArgument x:TypeArguments="x:String">[strTotalQty]</OutArgument>
+                          </ui:ExcelReadCell.Result>
+                        </ui:ExcelReadCell>
+                        <ui:ExcelReadCell Cell="[&quot;G&quot; &amp; intTotalRow]" DisplayName="rc_total_amt_before_tax" sap:VirtualizedContainerService.HintSize="358,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_3" PreserveFormat="True" SheetName="[strSheetName]">
+                          <ui:ExcelReadCell.Result>
+                            <OutArgument x:TypeArguments="x:String">[strTotalAmtBeforeTax]</OutArgument>
+                          </ui:ExcelReadCell.Result>
+                        </ui:ExcelReadCell>
+                        <ui:ExcelReadCell Cell="[&quot;I&quot; &amp; intTotalRow]" DisplayName="rc_tax_amt" sap:VirtualizedContainerService.HintSize="358,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_4" PreserveFormat="True" SheetName="[strSheetName]">
+                          <ui:ExcelReadCell.Result>
+                            <OutArgument x:TypeArguments="x:String">[strTotalTaxAmt]</OutArgument>
+                          </ui:ExcelReadCell.Result>
+                        </ui:ExcelReadCell>
+                        <ui:ExcelReadCell Cell="[&quot;J&quot; &amp; intTotalRow]" DisplayName="rc_tax_amt" sap:VirtualizedContainerService.HintSize="358,68.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_5" PreserveFormat="True" SheetName="[strSheetName]">
+                          <ui:ExcelReadCell.Result>
+                            <OutArgument x:TypeArguments="x:String">[strTotalAmtAfterTax]</OutArgument>
+                          </ui:ExcelReadCell.Result>
+                        </ui:ExcelReadCell>
+                        <ui:MultipleAssign sap2010:Annotation.AnnotationText="Thay dấu phẩy (,) do đọc giá trị trên hóa đơn với setting PreserveFormat" DisplayName="replace_all_comma" sap:VirtualizedContainerService.HintSize="358,243.333333333333" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+                          <ui:MultipleAssign.AssignOperations>
+                            <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[strTotalQty]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[strTotalQty.Replace(",","")]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[strTotalAmtBeforeTax]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[strTotalAmtBeforeTax.Replace(",","")]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[strTotalTaxAmt]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[strTotalTaxAmt.Replace(",","")]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[strTotalAmtAfterTax]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[strTotalAmtAfterTax.Replace(",","")]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                            </scg:List>
+                          </ui:MultipleAssign.AssignOperations>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:MultipleAssign>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                  <ui:MultipleAssign DisplayName="replace_value" sap:VirtualizedContainerService.HintSize="1107.33333333333,107.333333333333" sap2010:WorkflowViewState.IdRef="MultipleAssign_6">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_20">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[strTotalQty]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">[strTotalQty.replace("-","").Trim]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                  </ui:MultipleAssign>
+                  <ui:FilterDataTable DataTable="[dtaInvoiceDetail]" DisplayName="filter_empty_value" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="1107.33333333333,171.333333333333" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[dtaInvoiceDetail]" SelectColumnsMode="Keep">
+                    <ui:FilterDataTable.Filters>
+                      <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                        <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="NOTEMPTY">
+                          <ui:FilterOperationArgument.Column>
+                            <InArgument x:TypeArguments="x:String">[dtaInvoiceDetail.Columns(4).ColumnName]</InArgument>
+                          </ui:FilterOperationArgument.Column>
+                        </ui:FilterOperationArgument>
+                      </scg:List>
+                    </ui:FilterDataTable.Filters>
+                    <ui:FilterDataTable.SelectColumns>
+                      <scg:List x:TypeArguments="InArgument" Capacity="4">
+                        <x:Null />
+                      </scg:List>
+                    </ui:FilterDataTable.SelectColumns>
+                  </ui:FilterDataTable>
+                  <If sap2010:Annotation.AnnotationText="If _boolReviseContent is False, skip the validation" Condition="[boolReviseContent = True]" DisplayName="get_sum_from_invoice_range" sap:VirtualizedContainerService.HintSize="1107.33333333333,429.333333333333" sap2010:WorkflowViewState.IdRef="If_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <ui:MultipleAssign DisplayName="multiple_assign_sum_columns" sap:VirtualizedContainerService.HintSize="334,199.333333333333" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
+                        <ui:MultipleAssign.AssignOperations>
+                          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Double">[dblInvoiceQty]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Double">[dtaInvoiceDetail.AsEnumerable.Sum(function (s) Cdbl(s(4).ToString.Trim))]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Double">[dblInvoiceAmtBeforeTax]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Double">[dtaInvoiceDetail.AsEnumerable.Sum(function (s) Cdbl(s(6).ToString.Trim))]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_16">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Double">[dblInvoiceTaxAmt]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Double">[dtaInvoiceDetail.AsEnumerable.Sum(function (s) Cdbl(s(8).ToString.Trim))]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Double">[dblInvoiceAmtAfterTax]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Double">[dtaInvoiceDetail.AsEnumerable.Sum(function (s) Cdbl(s(9).ToString.Trim))]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                          </scg:List>
+                        </ui:MultipleAssign.AssignOperations>
+                      </ui:MultipleAssign>
+                    </If.Then>
+                  </If>
+                  <If Condition="[dblInvoiceQty = 0 or strTotalQty = &quot;&quot; or strTotalQty = &quot;0&quot;]" DisplayName="if_qty_equals_zero" sap:VirtualizedContainerService.HintSize="1107.33333333333,896" sap2010:WorkflowViewState.IdRef="If_15">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="log_qty_zero" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="log_qty_match" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_22" Level="Warn" Message="[&quot;Tổng lượng trên hóa đơn biểu thị bằng 0...&quot;]" />
+                        <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_30">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_31">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_16">
+                          <If.Then>
+                            <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_32">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">["Tổng lượng trên hóa đơn bằng 0"]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </If.Then>
+                          <If.Else>
+                            <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_33">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; " Tổng lượng trên hóa đơn bằng 0"]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </If.Then>
+                  </If>
+                  <If Condition="[boolValidation = True]" DisplayName="invoice_is_valid_qty" sap:VirtualizedContainerService.HintSize="1107.33333333333,1065.33333333333" sap2010:WorkflowViewState.IdRef="If_5">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <If Condition="[Cdbl(strTotalQty) = dblInvoiceQty]" DisplayName="validate_qty" sap:VirtualizedContainerService.HintSize="992,866" sap2010:WorkflowViewState.IdRef="If_4">
+                        <If.Then>
+                          <ui:LogMessage DisplayName="log_qty_match" sap:VirtualizedContainerService.HintSize="334,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;So sánh dòng Total Qty và tổng lượng trên hóa đơn: Khớp...&quot;]" />
+                        </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="log_qty_match" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Warn" Message="[&quot;So sánh dòng Total Qty và tổng lượng trên hóa đơn: Không khớp...&quot;]" />
+                            <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_10">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_8">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_17">
+                              <If.Then>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_34">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">["Tổng lượng trên hóa đơn không khớp"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_35">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; "Tổng lượng trên hóa đơn không khớp"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                    </If.Then>
+                  </If>
+                  <If Condition="[boolValidation = True]" DisplayName="invoice_is_valid_amt_before_tax" sap:VirtualizedContainerService.HintSize="1107.33333333333,1065.33333333333" sap2010:WorkflowViewState.IdRef="If_7">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <If Condition="[Cdbl(strTotalAmtBeforeTax) = dblInvoiceAmtBeforeTax]" DisplayName="validate_amt_before_tax" sap:VirtualizedContainerService.HintSize="992,866" sap2010:WorkflowViewState.IdRef="If_6">
+                        <If.Then>
+                          <ui:LogMessage DisplayName="log_amt_before_tax_match" sap:VirtualizedContainerService.HintSize="334,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;So sánh dòng Total Amount Before tax và tổng tiền trước thuế trên hóa đơn: Khớp...&quot;]" />
+                        </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Warn" Message="[&quot;So sánh dòng Total Amount Before tax và tổng tiền trước thuế trên hóa đơn: Không khớp...&quot;]" />
+                            <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_11">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_12">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_18">
+                              <If.Then>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_36">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">Tiền trước thuế trên hóa đơn không khớp</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_37">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; "Tiền trước thuế trên hóa đơn không khớp"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                    </If.Then>
+                  </If>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1107.33333333333,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_28" Message="[Cdbl(strTotalTaxAmt) &amp; &quot; &quot; &amp;  Math.Ceiling(dblInvoiceTaxAmt * 100) / 100]" />
+                  <If Condition="[boolValidation = True]" DisplayName="invoice_is_valid_tax_amt" sap:VirtualizedContainerService.HintSize="1107.33333333333,1065.33333333333" sap2010:WorkflowViewState.IdRef="If_9">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <If Condition="[Math.Round(Cdbl(strTotalTaxAmt),0, MidpointRounding.AwayFromZero) = Math.round(Math.Ceiling(dblInvoiceTaxAmt * 100) / 100, 0,MidpointRounding.AwayFromZero)]" DisplayName="validate_tax_amt" sap:VirtualizedContainerService.HintSize="992,866" sap2010:WorkflowViewState.IdRef="If_8">
+                        <If.Then>
+                          <ui:LogMessage DisplayName="log_tax_amt_match" sap:VirtualizedContainerService.HintSize="334,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_12" Level="Info" Message="[&quot;So sánh dòng Tax Amount và tổng thuế: Khớp...&quot;]" />
+                        </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_13" Level="Warn" Message="[&quot;So sánh dòng Tax Amount và tổng thuế: Không khớp...&quot;]" />
+                            <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_17">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_18">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_19">
+                              <If.Then>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_38">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">["Tổng thuế trên hóa đơn không khớp"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_39">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; "Tổng thuế trên hóa đơn không khớp"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                    </If.Then>
+                  </If>
+                  <If Condition="[boolValidation = True]" DisplayName="invoice_is_valid_amt_after_tax" sap:VirtualizedContainerService.HintSize="1107.33333333333,1244" sap2010:WorkflowViewState.IdRef="If_11">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1070.66666666667,1044.66666666667" sap2010:WorkflowViewState.IdRef="CommentOut_14">
+                        <ui:CommentOut.Body>
+                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="1034,956" sap2010:WorkflowViewState.IdRef="Sequence_57">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If Condition="[Math.Round(Cdbl(strTotalAmtAfterTax),0, MidpointRounding.AwayFromZero) = Math.round(Math.Ceiling(dblInvoiceAmtAfterTax), 0,MidpointRounding.AwayFromZero)]" DisplayName="validate_tax_amt" sap:VirtualizedContainerService.HintSize="992,866" sap2010:WorkflowViewState.IdRef="If_10">
+                              <If.Then>
+                                <ui:LogMessage DisplayName="log_tax_amt_match" sap:VirtualizedContainerService.HintSize="334,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Info" Message="[&quot;So sánh dòng Total Amount after tax và tổng tiền sau thuế trên hóa đơn: Khớp...&quot;]" />
+                              </If.Then>
+                              <If.Else>
+                                <Sequence DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:LogMessage DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Warn" Message="[&quot;So sánh dòng Total Amount After tax và tổng tiền sau thuế trên hóa đơn: Không khớp...&quot;]" />
+                                  <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_20">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_21">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_20">
+                                    <If.Then>
+                                      <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_40">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:String">Tiền sau thuế trên hóa đơn không khớp</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </If.Then>
+                                    <If.Else>
+                                      <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_41">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; "Tiền sau thuế trên hóa đơn không khớp"]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </If.Else>
+                                  </If>
+                                </Sequence>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </ui:CommentOut.Body>
+                      </ui:CommentOut>
+                    </If.Then>
+                  </If>
+                  <If Condition="[boolValidation = True]" DisplayName="invoice_is_valid__tax_with_total_amt" sap:VirtualizedContainerService.HintSize="1107.33333333333,1045.33333333333" sap2010:WorkflowViewState.IdRef="If_13">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <If Condition="[CDbl(strTotalAmtBeforeTax) + CDbl(strTotalTaxAmt) = CDbl(strTotalAmtAfterTax)]" DisplayName="validate_tax_with_total_amt" sap:VirtualizedContainerService.HintSize="992,866" sap2010:WorkflowViewState.IdRef="If_14">
+                        <If.Then>
+                          <ui:LogMessage DisplayName="log_total_amt_match" sap:VirtualizedContainerService.HintSize="334,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Info" Message="[&quot;Tổng tiền trước thuế + tiền thuế bằng Số tiền sau thuế...&quot;]" />
+                        </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_19" Level="Warn" Message="[&quot;Tổng tiền trước thuế + tiền thuế không khớp với Số tiền sau thuế...&quot;]" />
+                            <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_26">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_27">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_21">
+                              <If.Then>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_42">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">Tổng tiền trước thuế và tiền thuế không khớp với số tiền sau thuế</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_43">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; "Tổng tiền trước thuế và tiền thuế không khớp với số tiền sau thuế"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                    </If.Then>
+                  </If>
+                  <If Condition="[boolValidation = True]" DisplayName="invoice_is_valid_qty_all_more_than_zero" sap:VirtualizedContainerService.HintSize="1107.33333333333,1045.33333333333" sap2010:WorkflowViewState.IdRef="If_33">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <If Condition="[dtaInvoiceDetail.AsEnumerable.Any(Function (a) CDbl(a(4)) &lt; 0) = False or dtaInvoiceDetail.AsEnumerable.Any(Function (a) CDbl(a(5)) &lt; 0) = False]" DisplayName="validate_qty_more_than_zero" sap:VirtualizedContainerService.HintSize="992,866" sap2010:WorkflowViewState.IdRef="If_32">
+                        <If.Then>
+                          <ui:LogMessage DisplayName="log_no_qty_less_than_zero" sap:VirtualizedContainerService.HintSize="334,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_29" Level="Info" Message="[&quot;Mục số lượng hàng hóa / đơn giá luôn lớn hơn 0...&quot;]" />
+                        </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="log_not_match" sap:VirtualizedContainerService.HintSize="612,696.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="log_less_than_zero" sap:VirtualizedContainerService.HintSize="570,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_30" Level="Warn" Message="[&quot;Hóa đơn có item số lượng / đơn giá bị âm...&quot;]" />
+                            <Assign DisplayName="switch_validation" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_56">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolValidation]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="switch__boolReviseContent" sap:VirtualizedContainerService.HintSize="570,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_57">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[boolReviseContent]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[string.IsNullOrEmpty(strErrorDetail)]" DisplayName="if_strErrorMsg_empty" sap:VirtualizedContainerService.HintSize="570,240.666666666667" sap2010:WorkflowViewState.IdRef="If_31">
+                              <If.Then>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_58">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">["Hóa đơn có item số lượng/đơn giá bị âm"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Assign DisplayName="get_error_detail" sap:VirtualizedContainerService.HintSize="262,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_59">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[strErrorDetail &amp; " ; " &amp; "Hóa đơn có item số lượng/đơn giá bị âm"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                    </If.Then>
+                  </If>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="invoice_not_valid" sap:VirtualizedContainerService.HintSize="400,336.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="log_different_date" sap:VirtualizedContainerService.HintSize="338,103.333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_23" Level="Warn" Message="[&quot;Ngày yêu cầu xuất hóa đơn khác với ngày robot vận hành...&quot;]" />
+                  <Assign DisplayName="assign_errorMsg" sap:VirtualizedContainerService.HintSize="338,71.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_45">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[strErrorDetail]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">["Ngày yêu cầu xuất hóa đơn khác với ngày robot vận hành"]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Else>
+            </If>
+            <ui:ExcelCloseWorkbook DisplayName="Close Workbook" sap:VirtualizedContainerService.HintSize="1620.66666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_1" Workbook="[wb]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ivk_excel_kill" sap:VirtualizedContainerService.HintSize="1766,113.333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="wfs\excel\excel_kill.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <If Condition="[strErrorDetail = &quot;&quot;]" DisplayName="if_no_error_found" sap:VirtualizedContainerService.HintSize="1766,2850" sap2010:WorkflowViewState.IdRef="If_28">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence DisplayName="import_template_file" sap:VirtualizedContainerService.HintSize="557.333333333333,2688" sap2010:WorkflowViewState.IdRef="Sequence_32">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ForEach x:TypeArguments="sd:DataRow" CurrentIndex="{x:Null}" DisplayName="fer_dtaInvoiceDetail" sap:VirtualizedContainerService.HintSize="515.333333333333,1693.33333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[dtaInvoiceDetail.Rows]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="sd:DataRow">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="r" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="add_invoice_item_to_line" sap:VirtualizedContainerService.HintSize="478.666666666667,1566.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="assign_new_datarow" sap:VirtualizedContainerService.HintSize="436.666666666667,61.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_54">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataRow">[dtrInvoiceItem]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataRow">[dtaUploadInvoice.NewRow]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:MultipleAssign DisplayName="assign_invoice_items" sap:VirtualizedContainerService.HintSize="436.666666666667,712.666666666667" sap2010:WorkflowViewState.IdRef="MultipleAssign_7">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="32">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_22">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Mẫu số hóa đơn")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[1]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_23">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Ký hiệu hóa đơn")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[String.Concat("C", _dtiProcess.ToString("yy"), "TAA")]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_24">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Ngày hóa đơn")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[Datetime.Parse(strIssueDate).ToString("dd/MM/yyyy")]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_25">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Mã số thuế")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[strTaxCode.Trim.Replace(" ","")]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_26">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Mã đơn vị")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[strCustomerCode.Trim]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_27">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Tên đơn vị")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[strCompanyName]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_28">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Địa chỉ")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[strCompanyAddress]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_29">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Người mua hàng")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[_dtaCustomerDefinition(idx)("Buyer").tostring]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_30">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Email")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[_dtaCustomerDefinition(idx)("Buyer's Email").tostring]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_31">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Mã nguyên tệ")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">["VND"]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_32">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Tỷ giá")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[1]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_33">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Hình thức thanh toán")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">["01"]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_34">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Mã hàng")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(2).ToString]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_35">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Tên hàng")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(1).ToString]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_36">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Đơn vị tính")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(3).ToString]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_37">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Số lượng")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(4)]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_38">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Đơn giá")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[Cdbl(r(5))]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_39">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Thành tiền")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[cdbl(r(6))]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_40">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("% VAT")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(7)]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_41">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Tiền thuế VAT")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[Math.Round(CDbl(r(8)),0,MidpointRounding.AwayFromZero)]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_42">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Tính chất")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">["Hàng hóa, dịch vụ"]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:MultipleAssign>
+                  <ui:MultipleAssign DisplayName="assign_po_#" sap:VirtualizedContainerService.HintSize="436.666666666667,130" sap2010:WorkflowViewState.IdRef="MultipleAssign_8">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_46">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Số đơn hàng")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(10)]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_47">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Object">[dtrInvoiceItem("Số mục đơn hàng")]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Object">[r(11)]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                  </ui:MultipleAssign>
+                  <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="436.666666666667,222.666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_16">
+                    <ui:CommentOut.Body>
+                      <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="242,144" sap2010:WorkflowViewState.IdRef="Sequence_59">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If Condition="[_strRequestETAXFile.Contains(&quot;VPC1&quot;) or _strRequestETAXFile.Contains(&quot;HMN1&quot;)]" DisplayName="if_invoice_comes_from_hvn" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="If_29">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Else>
+                            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_39">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </ui:CommentOut.Body>
+                  </ui:CommentOut>
+                  <ui:AddDataRow ArrayRow="{x:Null}" DataRow="[dtrInvoiceItem]" DataTable="[dtaUploadInvoice]" DisplayName="adr_dtaUploadInvoice" sap:VirtualizedContainerService.HintSize="436.666666666667,188" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEach.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:ForEach>
+          <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(_strUploadFolder,&quot;Steel_&quot; &amp; Path.GetFileNameWithoutExtension(_strRequestETAXFile) &amp; &quot;.xlsx&quot;)]" DisplayName="copy_template" sap:VirtualizedContainerService.HintSize="515.333333333333,160" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="True" Path="[_strTemplatePath]" />
+          <ui:WriteRange AddHeaders="False" DataTable="[dtaUploadInvoice]" DisplayName="wr_import_file" sap:VirtualizedContainerService.HintSize="515.333333333333,114.666666666667" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Dữ liệu" StartingCell="A2" WorkbookPath="[Path.Combine(_strUploadFolder,&quot;Steel_&quot; &amp; Path.GetFileNameWithoutExtension(_strRequestETAXFile) &amp; &quot;.xlsx&quot;)]" />
+          <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="create_success_folder" sap:VirtualizedContainerService.HintSize="515.333333333333,80" sap2010:WorkflowViewState.IdRef="CreateDirectory_3" Path="[_strCompletedFolder]" />
+          <ui:MoveFile ContinueOnError="{x:Null}" Destination="[Path.Combine(_strCompletedFolder, Path.GetFileName(_strRequestETAXFile))]" DisplayName="move_file" sap:VirtualizedContainerService.HintSize="515.333333333333,160" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="[_strRequestETAXFile]" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Prepare&quot;, Path.GetFileNameWithoutExtension(_strRequestETAXFile), Path.Combine(_strUploadFolder,&quot;Steel_&quot; &amp; Path.GetFileNameWithoutExtension(_strRequestETAXFile) &amp; &quot;.xlsx&quot;), &quot;Tạo file import&quot;, &quot;OK&quot;, &quot;&quot;}]" DataTable="[_dtaTracking]" DisplayName="adr__dtaTracking" sap:VirtualizedContainerService.HintSize="515.333333333333,188" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="log_and_skip" sap:VirtualizedContainerService.HintSize="426,733.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_33">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="warn_error" sap:VirtualizedContainerService.HintSize="384,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_26" Level="Warn" Message="[&quot;Không tạo file import từ file &quot; &amp; _strRequestETAXFile &amp; &quot;vì các lý do: &quot; &amp; strErrorDetail &amp; &quot;...&quot;]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:LogMessage>
+          <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="create_failed_folder" sap:VirtualizedContainerService.HintSize="384,80" sap2010:WorkflowViewState.IdRef="CreateDirectory_2" Path="[_strFailedFolder]" />
+          <ui:MoveFile ContinueOnError="{x:Null}" Destination="[Path.Combine(_strFailedFolder, Path.GetFileName(_strRequestETAXFile))]" DisplayName="move_file" sap:VirtualizedContainerService.HintSize="384,160" sap2010:WorkflowViewState.IdRef="MoveFile_2" Overwrite="True" Path="[_strRequestETAXFile]" />
+          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Prepare&quot;, _strRequestETAXFile, &quot;&quot;,  &quot;Tạo file import&quot;, &quot;NG&quot;, strErrorDetail}]" DataTable="[_dtaTracking]" DisplayName="adr__dtaTracking" sap:VirtualizedContainerService.HintSize="384,188" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <ui:LogMessage DisplayName="log_complete" sap:VirtualizedContainerService.HintSize="1766,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_21" Level="Info" Message="[&quot;Nhận diện và kiểm tra hóa đơn: &quot; &amp; _strRequestETAXFile &amp; &quot; thành công...&quot;]" />
+  </Sequence>
+</Activity>

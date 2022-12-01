@@ -1,0 +1,641 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="ultis_export_two_invoices" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="_strExportType" Type="InArgument(x:String)" />
+    <x:Property Name="_strInputFile" Type="InArgument(x:String)" />
+    <x:Property Name="_arrProcess" Type="InArgument(s:String[])" />
+    <x:Property Name="_intInvoiceLastRow" Type="InArgument(x:Int32)" />
+    <x:Property Name="_strETAXSheet" Type="InArgument(x:String)" />
+    <x:Property Name="_strInvoiceFolder" Type="InArgument(x:String)" />
+    <x:Property Name="_strLastFolderName" Type="InArgument(x:String)" />
+    <x:Property Name="_strCustomerName" Type="InArgument(x:String)" />
+    <x:Property Name="_strInvoiceRange" Type="InArgument(x:String)" />
+    <x:Property Name="_strSalesListSheet" Type="InArgument(x:String)" />
+    <x:Property Name="_strSalesListDataRange" Type="InArgument(x:String)" />
+    <x:Property Name="_dtaTracking" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="_dtiProcess" Type="InArgument(s:DateTime)" />
+  </x:Members>
+  <this:ultis_export_two_invoices._intInvoiceLastRow>
+    <InArgument x:TypeArguments="x:Int32" />
+  </this:ultis_export_two_invoices._intInvoiceLastRow>
+  <this:ultis_export_two_invoices._strETAXSheet>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strETAXSheet>
+  <this:ultis_export_two_invoices._strInvoiceFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strInvoiceFolder>
+  <this:ultis_export_two_invoices._strLastFolderName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strLastFolderName>
+  <this:ultis_export_two_invoices._strCustomerName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strCustomerName>
+  <this:ultis_export_two_invoices._strInvoiceRange>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strInvoiceRange>
+  <this:ultis_export_two_invoices._strSalesListSheet>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strSalesListSheet>
+  <this:ultis_export_two_invoices._strSalesListDataRange>
+    <InArgument x:TypeArguments="x:String" />
+  </this:ultis_export_two_invoices._strSalesListDataRange>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1441,8118</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ultis_export_two_invoices_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="31">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>UiPath.Excel</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="40">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="ultis_export_two_invoices" sap:VirtualizedContainerService.HintSize="1451,8053" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ui:WorkbookApplication" Name="objWorkbook" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1409,330" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="380,252" sap2010:WorkflowViewState.IdRef="Sequence_18">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="338,160" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+            <ui:MultipleAssign.AssignOperations>
+              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strExportType]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">1</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strInputFile]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">C:\Users\aduong\RPA01_IssueTaxInvoice\rsc\process_data\print\coil\Saleslist_for_Kyoei.xlsx</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">[_strETAXSheet]</OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">REQ ETAX</InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+              </scg:List>
+            </ui:MultipleAssign.AssignOperations>
+          </ui:MultipleAssign>
+        </Sequence>
+      </ui:CommentOut.Body>
+    </ui:CommentOut>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1409,230" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_19">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[_intInvoiceLastRow]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">209</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </ui:CommentOut.Body>
+    </ui:CommentOut>
+    <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="eac__strInputFile" sap:VirtualizedContainerService.HintSize="1409,7321" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="0" Workbook="[objWorkbook]" WorkbookPath="[_strInputFile]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence sap2010:Annotation.AnnotationText="Xử lý tách hóa đơn" DisplayName="process_case_2/4/5" sap:VirtualizedContainerService.HintSize="1375,7212" sap2010:WorkflowViewState.IdRef="Sequence_16">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:Boolean" Name="boolZeroPrice" />
+              <Variable x:TypeArguments="x:Boolean" Name="boolDuplicate" />
+              <Variable x:TypeArguments="s:String[]" Name="arrProcess" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[_strExportType = &quot;2&quot;]" DisplayName="trace_invoice_type" sap:VirtualizedContainerService.HintSize="1333,252" sap2010:WorkflowViewState.IdRef="If_7">
+              <If.Then>
+                <ui:LogMessage DisplayName="trace_invoice_type_2" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Xuất hóa đơn cho File &quot; &amp; Path.GetFileName(_strInputFile) &amp; &quot; dưới dạng tách tấm / cuộn..&quot;]" />
+              </If.Then>
+              <If.Else>
+                <ui:LogMessage DisplayName="trace_invoice_type_4/5" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Trace" Message="[&quot;Xuất hóa đơn cho File &quot; &amp; Path.GetFileName(_strInputFile) &amp; &quot; dưới dạng tách item đặc biệt...&quot;]" />
+              </If.Else>
+            </If>
+            <Assign DisplayName="init_arrProcess" sap:VirtualizedContainerService.HintSize="1333,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="s:String[]">[arrProcess]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="s:String[]">[_arrProcess]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="fe_invoice_split_type" sap:VirtualizedContainerService.HintSize="1333,6598" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[arrProcess]">
+              <ui:ForEach.Body>
+                <ActivityAction x:TypeArguments="x:String">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:String" Name="type" />
+                  </ActivityAction.Argument>
+                  <Sequence sap2010:Annotation.AnnotationText="Xuất hóa đơn cho phần thép tấm (nếu có)" DisplayName="export_target_invoice" sap:VirtualizedContainerService.HintSize="1297,6464" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="strTotalQty" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:ExcelReadRange DataTable="{x:Null}" AddHeaders="False" DisplayName="rr_active_sheet" sap:VirtualizedContainerService.HintSize="1255,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" SheetName="[_strETAXSheet]">
+                      <ui:ExcelReadRange.Range>
+                        <InArgument x:TypeArguments="x:String">
+                          <Literal x:TypeArguments="x:String" Value="" />
+                        </InArgument>
+                      </ui:ExcelReadRange.Range>
+                    </ui:ExcelReadRange>
+                    <ui:ExcelWriteCell Cell="K5" DisplayName="write_issue_date" sap:VirtualizedContainerService.HintSize="1255,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_7" SheetName="[_strETAXSheet]" Text="[_dtiProcess.ToString(&quot;M/d/yyyy&quot;)]" />
+                    <ui:InvokeVBA OutputValue="{x:Null}" sap2010:Annotation.AnnotationText="Xóa filter để Subtotal hiển thị đúng sum value" CodeFilePath="wfs\vba\remove_filter.bas" DisplayName="ivk_remove_filter" EntryMethodName="Main" sap:VirtualizedContainerService.HintSize="1255,118" sap2010:WorkflowViewState.IdRef="InvokeVBA_1">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:InvokeVBA>
+                    <Parallel sap2010:Annotation.AnnotationText="Filter cột B với loại hình xử lý" DisplayName="parallel_process_vba_filter" sap:VirtualizedContainerService.HintSize="1255,722" sap2010:WorkflowViewState.IdRef="Parallel_1">
+                      <Parallel.Variables>
+                        <Variable x:TypeArguments="x:Boolean" Name="boolProcess" />
+                      </Parallel.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Parallel.CompletionCondition>[boolProcess = True]</Parallel.CompletionCondition>
+                      <Sequence DisplayName="catch_time_out" sap:VirtualizedContainerService.HintSize="242,645" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Delay DisplayName="delay_10_sec" Duration="00:00:10" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                        <Throw DisplayName="throw_sys_exc" Exception="[New SystemException(&quot;VBA Timeout: find_row_letter&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                      </Sequence>
+                      <ui:RetryScope DisplayName="retry_check_done" sap:VirtualizedContainerService.HintSize="797,645" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="1" RetryInterval="00:00:10">
+                        <ui:RetryScope.ActivityBody>
+                          <ActivityAction>
+                            <Sequence DisplayName="run_vba" sap:VirtualizedContainerService.HintSize="755,469" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If sap2010:Annotation.AnnotationText="Với case 4,5, filter ở cột C" Condition="[_strExportType = &quot;2&quot;]" DisplayName="if_process_case_2" sap:VirtualizedContainerService.HintSize="713,277" sap2010:WorkflowViewState.IdRef="If_10">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="wfs\vba\filter_req_etax(coil).bas" DisplayName="ivk_vba_filter_req_etax" EntryMethodName="Main" EntryMethodParameters="[{type}]" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeVBA_2" />
+                                </If.Then>
+                                <If.Else>
+                                  <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="wfs\vba\filter_req_etax(coil).bas" DisplayName="ivk_vba_filter_req_etax" EntryMethodName="Main" EntryMethodParameters="[{type, &quot;3&quot;}]" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeVBA_5" />
+                                </If.Else>
+                              </If>
+                              <Assign DisplayName="assign_boolCheck" sap:VirtualizedContainerService.HintSize="713,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:Boolean">[boolProcess]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:RetryScope.ActivityBody>
+                        <ui:RetryScope.Condition>
+                          <ActivityFunc x:TypeArguments="x:Boolean" />
+                        </ui:RetryScope.Condition>
+                      </ui:RetryScope>
+                    </Parallel>
+                    <ui:ExcelReadCell sap2010:Annotation.AnnotationText="Đọc ô E của dòng cuối cùng để kiểm tra tính hợp lý của dữ liệu" Cell="[&quot;E&quot; &amp; _intInvoiceLastRow]" DisplayName="read_cell_e_total_qty" sap:VirtualizedContainerService.HintSize="1255,103" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" PreserveFormat="True" SheetName="[_strETAXSheet]">
+                      <ui:ExcelReadCell.Result>
+                        <OutArgument x:TypeArguments="x:String">[strTotalQty]</OutArgument>
+                      </ui:ExcelReadCell.Result>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:ExcelReadCell>
+                    <If sap2010:Annotation.AnnotationText="Nếu kết quả trả về &quot;-&quot;, Sales list không cần xuất hóa đơn ngày hôm đó." Condition="[strTotalQty.Replace(&quot; &quot;,&quot;&quot;).trim &lt;&gt; &quot;-&quot;]" DisplayName="if_strCheck_equals_&quot;-&quot;" sap:VirtualizedContainerService.HintSize="1255,5052" sap2010:WorkflowViewState.IdRef="If_6">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence DisplayName="perform_issue_invoice" sap:VirtualizedContainerService.HintSize="876,4862" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="strInvoiceName" />
+                            <Variable x:TypeArguments="x:String" Name="strPrintExcelPath" />
+                            <Variable x:TypeArguments="x:Boolean" Name="boolCheck" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="log_trace" sap:VirtualizedContainerService.HintSize="834,93" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace" Message="[&quot;Xuất hóa đơn &quot; &amp; _ &#xA;&#x9;If(_strExportType = &quot;2&quot;, type.ToLower ,  _&#xA;&#x9;&#x9;If (type.Contains(&quot;&lt;&gt;&quot;), &quot; cho sản phẩm thường&quot; , &quot;cho sản phẩm đặc biệt&quot;)  _&#xA;&#x9;) &amp; _ &#xA;&quot; của file: &quot; &amp; path.GetFileName(_strInputFile) &amp;&quot;...&quot;]" />
+                          <Switch x:TypeArguments="x:String" DisplayName="switch_invoice_name" Expression="[_strExportType]" sap:VirtualizedContainerService.HintSize="834,186" sap2010:WorkflowViewState.IdRef="Switch`1_2">
+                            <If x:Key="2" Condition="[type = &quot;Thép Tấm&quot;]" DisplayName="check_invoice_name_case_1" sap:VirtualizedContainerService.HintSize="713,244" sap2010:WorkflowViewState.IdRef="If_1">
+                              <If.Then>
+                                <ui:ExcelWriteCell Cell="K7" DisplayName="write_invoice_id" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="[_strETAXSheet]" Text="[&quot;=K2&amp;&quot;&quot;-&quot;&quot;&amp;K3&amp;&quot;&quot;-&quot;&quot;&amp;K4 &amp; &quot;&quot;_TẤM&quot;&quot;&quot;]" />
+                              </If.Then>
+                              <If.Else>
+                                <ui:ExcelWriteCell Cell="K7" DisplayName="write_invoice_id" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="[_strETAXSheet]" Text="[&quot;=K2&amp;&quot;&quot;-&quot;&quot;&amp;K3&amp;&quot;&quot;-&quot;&quot;&amp;K4 &amp; &quot;&quot;_CUỘN&quot;&quot;&quot;]" />
+                              </If.Else>
+                            </If>
+                            <If x:Key="4" Condition="[type.Contains(&quot;&lt;&gt;&quot;) = False]" DisplayName="check_invoice_name_case_4" sap:VirtualizedContainerService.HintSize="713,244" sap2010:WorkflowViewState.IdRef="If_8">
+                              <If.Then>
+                                <ui:ExcelWriteCell Cell="K7" DisplayName="write_invoice_id" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="[_strETAXSheet]" Text="[&quot;=K2&amp;&quot;&quot;-&quot;&quot;&amp;K3&amp;&quot;&quot;-&quot;&quot;&amp;K4 &amp; &quot;&quot;_SPECIAL&quot;&quot;&quot;]" />
+                              </If.Then>
+                              <If.Else>
+                                <ui:ExcelWriteCell Cell="K7" DisplayName="write_invoice_id" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_4" SheetName="[_strETAXSheet]" Text="[&quot;=K2&amp;&quot;&quot;-&quot;&quot;&amp;K3&amp;&quot;&quot;-&quot;&quot;&amp;K4&quot;]" />
+                              </If.Else>
+                            </If>
+                            <If x:Key="5" Condition="[type.Contains(&quot;&lt;&gt;&quot;) = False]" DisplayName="check_invoice_name_case_5" sap:VirtualizedContainerService.HintSize="713,246" sap2010:WorkflowViewState.IdRef="If_9">
+                              <If.Then>
+                                <ui:ExcelWriteCell Cell="K7" DisplayName="write_invoice_id" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_5" SheetName="[_strETAXSheet]" Text="[&quot;=K2&amp;&quot;&quot;-&quot;&quot;&amp;K3&amp;&quot;&quot;-&quot;&quot;&amp;K4 &amp; &quot;&quot;_SPECIAL&quot;&quot;&quot;]" />
+                              </If.Then>
+                              <If.Else>
+                                <ui:ExcelWriteCell Cell="K7" DisplayName="write_invoice_id" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_6" SheetName="[_strETAXSheet]" Text="[&quot;=K2&amp;&quot;&quot;-&quot;&quot;&amp;K3&amp;&quot;&quot;-&quot;&quot;&amp;K4&quot;]" />
+                              </If.Else>
+                            </If>
+                          </Switch>
+                          <ui:ExcelReadCell Cell="K7" DisplayName="rc_strInvoiceName" sap:VirtualizedContainerService.HintSize="834,59" sap2010:WorkflowViewState.IdRef="ExcelReadCell_2" SheetName="[_strETAXSheet]">
+                            <ui:ExcelReadCell.Result>
+                              <OutArgument x:TypeArguments="x:String">[strInvoiceName]</OutArgument>
+                            </ui:ExcelReadCell.Result>
+                          </ui:ExcelReadCell>
+                          <Assign DisplayName="assign_save_filepath" sap:VirtualizedContainerService.HintSize="834,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[strPrintExcelPath]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String" xml:space="preserve">[system.io.Path.Combine(_strInvoiceFolder,_strLastFolderName,  "REQ_ETAX_" &amp; _strCustomerName &amp; "_" &amp; strInvoiceName  &amp; ".xlsx")]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="assign_boolCheck" sap:VirtualizedContainerService.HintSize="834,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">[boolCheck]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="wfs\vba\filter_req_etax.bas" DisplayName="ivk_filter_req_etax" EntryMethodName="Main" sap:VirtualizedContainerService.HintSize="834,87" sap2010:WorkflowViewState.IdRef="InvokeVBA_7" />
+                          <Parallel DisplayName="parallel_process_vba_save_ws" sap:VirtualizedContainerService.HintSize="834,501" sap2010:WorkflowViewState.IdRef="Parallel_2">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Parallel.CompletionCondition>[boolCheck]</Parallel.CompletionCondition>
+                            <Sequence DisplayName="catch_time_out" sap:VirtualizedContainerService.HintSize="242,455" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Delay DisplayName="delay_10_sec" Duration="00:00:30" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Delay_2" />
+                              <Throw DisplayName="throw_sys_exc" Exception="[New SystemException(&quot;Lỗi xử lý VBA: save_worksheet_as_new&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                            </Sequence>
+                            <ui:RetryScope DisplayName="retry_check_done" sap:VirtualizedContainerService.HintSize="418,455" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="1" RetryInterval="00:00:10">
+                              <ui:RetryScope.ActivityBody>
+                                <ActivityAction>
+                                  <Sequence DisplayName="run_vba_clone_sheet" sap:VirtualizedContainerService.HintSize="376,279" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="x:Object" Name="objReturnValue" />
+                                    </Sequence.Variables>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:InvokeVBA CodeFilePath="wfs\vba\save_worksheet_as_new.bas" DisplayName="ivk_vba_clone_sheet" EntryMethodName="Main" EntryMethodParameters="[{_strETAXSheet,strPrintExcelPath}]" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeVBA_4" OutputValue="[objReturnValue]" />
+                                    <Assign DisplayName="assign_boolCheck" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Boolean">[boolCheck]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </Sequence>
+                                </ActivityAction>
+                              </ui:RetryScope.ActivityBody>
+                              <ui:RetryScope.Condition>
+                                <ActivityFunc x:TypeArguments="x:Boolean" />
+                              </ui:RetryScope.Condition>
+                            </ui:RetryScope>
+                          </Parallel>
+                          <ui:LogMessage DisplayName="trace_invoice_type" sap:VirtualizedContainerService.HintSize="834,93" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Trace" Message="[&quot;Xuất xong hóa đơn &quot; &amp; strPrintExcelPath &amp; &quot;. Thực hiện check format hóa đơn...&quot;]" />
+                          <Sequence DisplayName="check_format" sap:VirtualizedContainerService.HintSize="834,3178" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="sd:DataTable" Name="dtaInvoiceData" />
+                              <Variable x:TypeArguments="sd:DataTable" Name="dtaSalesListDataRange" />
+                              <Variable x:TypeArguments="x:Boolean" Name="boolResult" />
+                            </Sequence.Variables>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtaInvoiceData]" DisplayName="rr_invoice_range" sap:VirtualizedContainerService.HintSize="755,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="[_strInvoiceRange]" SheetName="[_strETAXSheet]" UseFilter="True" />
+                            <ui:ExcelReadRange AddHeaders="True" DataTable="[dtaSalesListDataRange]" DisplayName="rr_Gates_Material" sap:VirtualizedContainerService.HintSize="755,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" Range="[_strSalesListDataRange]" SheetName="[_strSalesListSheet]" />
+                            <ui:MultipleAssign DisplayName="init_checkpoint" sap:VirtualizedContainerService.HintSize="755,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                              <ui:MultipleAssign.AssignOperations>
+                                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:Boolean">[boolZeroPrice]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:Boolean">[boolDuplicate]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                </scg:List>
+                              </ui:MultipleAssign.AssignOperations>
+                            </ui:MultipleAssign>
+                            <ui:ForEach x:TypeArguments="sd:DataRow" CurrentIndex="{x:Null}" DisplayName="fer_dtaInvoiceData" sap:VirtualizedContainerService.HintSize="755,1462" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[dtaInvoiceData.Rows]">
+                              <ui:ForEach.Body>
+                                <ActivityAction x:TypeArguments="sd:DataRow">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                  </ActivityAction.Argument>
+                                  <Sequence DisplayName="perform_price_and_occurence_check" sap:VirtualizedContainerService.HintSize="526,1328" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="x:Int32" Name="intOccurence" />
+                                    </Sequence.Variables>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <If Condition="[row(2).tostring &lt;&gt; &quot;&quot; AndAlso _&#xA;If(row(5).ToString.Replace(&quot; &quot;,&quot;&quot;).Replace(&quot;-&quot;,&quot;&quot;) .trim = &quot;&quot;, 0 , CDbl(row(5).ToString.Replace(&quot;,&quot;,&quot;&quot;))) = 0]" DisplayName="if_price_is_zero" sap:VirtualizedContainerService.HintSize="484,598" sap2010:WorkflowViewState.IdRef="If_2">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <Sequence DisplayName="log_warn_price_zero" sap:VirtualizedContainerService.HintSize="376,409" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:LogMessage DisplayName="log_warn" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Warn" Message="[&quot;Giá của sản phẩm: &quot; &amp; row(2).ToString &amp; &quot; bằng 0...&quot;]" />
+                                          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{path.GetFileName(_strInputFile), strPrintExcelPath, &quot;NG&quot;, &quot;Giá của sản phẩm: &quot; &amp; row(2).ToString &amp; &quot; bằng 0...&quot;}]" DataTable="[_dtaTracking]" DisplayName="adr__dtaTracking" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                                          <Assign DisplayName="checkpoint_zero_price" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Boolean">[boolZeroPrice]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                          <ui:Break sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Break_1" />
+                                        </Sequence>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_7">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                    <If Condition="[row(2).tostring &lt;&gt; &quot;&quot;  AndAlso _ &#xA;dtaSalesListDataRange.AsEnumerable.Where(Function(r) r(0).ToString.trim = row(2).ToString.trim).Count &gt; 1]" DisplayName="if_two_items_in_SL" sap:VirtualizedContainerService.HintSize="484,598" sap2010:WorkflowViewState.IdRef="If_3">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <Sequence DisplayName="log_warn_duplicate" sap:VirtualizedContainerService.HintSize="376,409" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:LogMessage DisplayName="log_warn" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn" Message="[&quot;Sản phẩm: &quot; &amp; row(2).ToString &amp; &quot; có ít nhất 2 giá trong Sales List&quot;]" />
+                                          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{path.GetFileName(_strInputFile), strPrintExcelPath, &quot;NG&quot;, &quot;Sản phẩm: &quot; &amp; row(2).ToString &amp; &quot; có 2 giá trong Sales List&quot;}]" DataTable="[_dtaTracking]" DisplayName="adr__dtaTracking" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+                                          <Assign DisplayName="checkpoint_duplicate" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Boolean">[boolDuplicate]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                          <ui:Break sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Break_2" />
+                                        </Sequence>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_9">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                  </Sequence>
+                                </ActivityAction>
+                              </ui:ForEach.Body>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:ForEach>
+                            <If Condition="[boolDuplicate = true or boolZeroPrice = true]" DisplayName="checkpoint_confirmation" sap:VirtualizedContainerService.HintSize="755,249" sap2010:WorkflowViewState.IdRef="If_4">
+                              <If.Then>
+                                <ui:Continue sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                              </If.Then>
+                              <If.Else>
+                                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </Sequence>
+                              </If.Else>
+                            </If>
+                            <ui:LogMessage DisplayName="trace_occurence_check" sap:VirtualizedContainerService.HintSize="755,93" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Trace" Message="[&quot;Tất cả sản phẩm chỉ có 1 giá trong SL và giá khác 0...&quot;]" />
+                            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_ultis_check_item_decimal" sap:VirtualizedContainerService.HintSize="755,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="wfs\_utils\ultis_check_item_decimal.xaml">
+                              <ui:InvokeWorkflowFile.Arguments>
+                                <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaInvoice">[dtaInvoiceData]</InArgument>
+                                <OutArgument x:TypeArguments="x:Boolean" x:Key="_boolResult">[boolResult]</OutArgument>
+                                <InArgument x:TypeArguments="x:Int32" x:Key="_intColumnIndex">5</InArgument>
+                              </ui:InvokeWorkflowFile.Arguments>
+                            </ui:InvokeWorkflowFile>
+                            <If Condition="[boolResult = True]" DisplayName="if_pass_decimal_check" sap:VirtualizedContainerService.HintSize="755,468" sap2010:WorkflowViewState.IdRef="If_5">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If.Then>
+                                <ui:LogMessage DisplayName="trace_decimal" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Trace" Message="[&quot;Đơn giá đúng định dạng...&quot;]" />
+                              </If.Then>
+                              <If.Else>
+                                <Sequence DisplayName="log_warn" sap:VirtualizedContainerService.HintSize="376,309" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:LogMessage DisplayName="log_warn" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Warn" Message="[&quot;Đơn giá có số thập phân...&quot;]" />
+                                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{path.GetFileName(_strInputFile), strPrintExcelPath, &quot;NG&quot;, &quot;Đơn giá có số thập phân&quot;}]" DataTable="[_dtaTracking]" DisplayName="adr__dtaTracking" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+                                  <ui:Continue sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Continue_2" />
+                                </Sequence>
+                              </If.Else>
+                            </If>
+                            <ui:AddDataRow DataRow="{x:Null}" sap2010:Annotation.AnnotationText="Nếu robot không gặp vấn đề gì khi check, robot sẽ đánh dấu hóa đơn này là thành công" ArrayRow="[{path.GetFileName(_strInputFile), strPrintExcelPath, &quot;OK&quot;, &quot;&quot;}]" DataTable="[_dtaTracking]" DisplayName="adr__dtaTracking" sap:VirtualizedContainerService.HintSize="755,98" sap2010:WorkflowViewState.IdRef="AddDataRow_4">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:AddDataRow>
+                            <ui:ExcelSaveWorkbook DisplayName="Save Workbook" sap:VirtualizedContainerService.HintSize="755,22" sap2010:WorkflowViewState.IdRef="ExcelSaveWorkbook_1" />
+                          </Sequence>
+                          <ui:LogMessage DisplayName="log_export_invoice_end" sap:VirtualizedContainerService.HintSize="834,93" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Xuất và kiểm tra thành công hóa đơn: &quot; &amp; strPrintExcelPath]" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <ui:LogMessage DisplayName="log_trace" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;File &quot; &amp; Path.GetFileName(_strInputFile) &amp; &quot; không cần xuất hóa đơn &quot; &amp; _ &#xA;If(_strExportType = &quot;2&quot;, &quot; cho dạng &quot; &amp;  type.ToLower ,  _&#xA;&#x9;If (type.Contains(&quot;&lt;&gt;&quot;), &quot; cho sản phẩm thường...&quot; , &quot;cho sản phẩm đặc biệt...&quot;)  _&#xA;)]" />
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEach.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEach>
+            <ui:ExcelCloseWorkbook DisplayName="Close Workbook" sap:VirtualizedContainerService.HintSize="1333,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_1" Workbook="[objWorkbook]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+  </Sequence>
+</Activity>

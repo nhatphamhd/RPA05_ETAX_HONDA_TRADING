@@ -1,0 +1,4 @@
+<br>
+<br>Robot has encounterted a fatal business rule exception when executing process <b>{0}</b>.
+<br>The business rule exception detail was: {1}
+<br> 

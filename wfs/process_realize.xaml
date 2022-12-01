@@ -1,0 +1,571 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="process_realize" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="_dtiProcess" Type="InArgument(s:DateTime)" />
+    <x:Property Name="_strTemplateFile" Type="InArgument(x:String)" />
+    <x:Property Name="_dicConfig" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="_dtaTracking" Type="InOutArgument(sd:DataTable)" />
+  </x:Members>
+  <this:process_realize._dtiProcess>
+    <InArgument x:TypeArguments="s:DateTime" />
+  </this:process_realize._dtiProcess>
+  <this:process_realize._strTemplateFile>
+    <InArgument x:TypeArguments="x:String" />
+  </this:process_realize._strTemplateFile>
+  <this:process_realize._dicConfig>
+    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" />
+  </this:process_realize._dicConfig>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1246.66666666667,6382.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>process_realize_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="31">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="27">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="process_realize" sap:VirtualizedContainerService.HintSize="1256.66666666667,6318" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Boolean)" Name="dicRealizeNumber" />
+      <Variable x:TypeArguments="x:String" Name="strVATReport" />
+      <Variable x:TypeArguments="x:String" Name="strMaterialMaster" />
+      <Variable x:TypeArguments="x:String" Name="strGrossProfitBOList" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaRealize" />
+      <Variable x:TypeArguments="x:String" Name="strSalesDeliveryReport" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaVATReport" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaMaterialMaster" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaGrossProfit" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaCustomerDefinition" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtaSpecialItems" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:MultipleAssign DisplayName="init_args" sap:VirtualizedContainerService.HintSize="1214.66666666667,97.3333333333333" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="s:DateTime">[_dtiProcess]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="s:DateTime">[new DateTime(2022,08,15,00,00,00)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <ui:BuildDataTable DataTable="[_dtaTracking]" DisplayName="init_datatable" sap:VirtualizedContainerService.HintSize="1214.66666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;state&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;request&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;file&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;activity&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;status&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;reason&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+    <If sap2010:Annotation.AnnotationText="This allows to be run as standalone (i.e., run this outside Framework where _dicConfigruation is empty) &#xA;OR&#xA;run inside Framework passing the external dictionary as argument" Condition="[_dicConfig Is Nothing]" DisplayName="if_external_config_dict_empty" sap:VirtualizedContainerService.HintSize="1214.66666666667,355.333333333333" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="inv_utils_read_config_dict" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="wfs\_fmw\utils_read_config_dict.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="_dicConfiguration">[_dicConfig]</OutArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="_strConfigFile">C:\Users\HTVOPSUSERS\RPA05_ETAXUpload\configuration.xlsx</InArgument>
+            <InArgument x:TypeArguments="s:String[]" x:Key="_strarrConfigSheets">[{"base"}]</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </If.Then>
+    </If>
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_login" sap:VirtualizedContainerService.HintSize="1214.66666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="wfs\gates\GATES_login.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="_strGatesLink">[_dicConfig("GATES_LINK").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="_strCredential">[_dicConfig("GATES_CREDENTIALS").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <If Condition="[dicRealizeNumber is Nothing]" DisplayName="if_realize_list_is_not_initialized" sap:VirtualizedContainerService.HintSize="1214.66666666667,1076.66666666667" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <TryCatch DisplayName="tc_download_realize_report" sap:VirtualizedContainerService.HintSize="438.666666666667,914.666666666667" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+          <TryCatch.Try>
+            <Sequence DisplayName="try_download_realize_report" sap:VirtualizedContainerService.HintSize="378.666666666667,657.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_navigation" sap:VirtualizedContainerService.HintSize="336.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="wfs\gates\GATES_navigation.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="_strTransactionCode">[_dicConfig("DELIVERY_POSTING_TX").ToString]</InArgument>
+                  <InArgument x:TypeArguments="x:Boolean" x:Key="_boolClosingWindow">False</InArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_download_Sales_Delivery" sap:VirtualizedContainerService.HintSize="336.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="wfs\gates\GATES_download_Sales_Delivery.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="s:DateTime" x:Key="_dtiProcess">[_dtiProcess]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="_strCompanyCode">[_dicConfig("COMPANY_CODE").ToString]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="_strDownloadFolder">[_dicConfig("DOWNLOAD_FOLDER").ToString]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="_strProcessFolder">[_dicConfig("REPORT_FOLDER").ToString]</InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="_strSalesDeliveryReport">[strSalesDeliveryReport]</OutArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_excel_get_realize_list" sap:VirtualizedContainerService.HintSize="336.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="wfs\excel\excel_get_realize_list.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="s:DateTime" x:Key="_dtiProcess">[_dtiProcess]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="_strRealizeReport">[strSalesDeliveryReport]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="_strBacklogReport">[Path.Combine(_dicConfig("INPUTS").ToString, _dicConfig("BACKLOG_FILE").ToString)]</InArgument>
+                  <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Boolean)" x:Key="_dicRealizeNumber">[dicRealizeNumber]</OutArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtaRealize]" DisplayName="rr_realize_list" sap:VirtualizedContainerService.HintSize="336.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="[strSalesDeliveryReport]" />
+              <ui:FilterDataTable DataTable="[dtaRealize]" DisplayName="filter_relevant_realize" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="336.666666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[dtaRealize]" SelectColumnsMode="Keep">
+                <ui:FilterDataTable.Filters>
+                  <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                    <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
+                      <ui:FilterOperationArgument.Column>
+                        <InArgument x:TypeArguments="x:String">["Document category"]</InArgument>
+                      </ui:FilterOperationArgument.Column>
+                      <ui:FilterOperationArgument.Operand>
+                        <InArgument x:TypeArguments="x:String">["BL"]</InArgument>
+                      </ui:FilterOperationArgument.Operand>
+                    </ui:FilterOperationArgument>
+                    <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
+                      <ui:FilterOperationArgument.Column>
+                        <InArgument x:TypeArguments="x:String">["Currency"]</InArgument>
+                      </ui:FilterOperationArgument.Column>
+                      <ui:FilterOperationArgument.Operand>
+                        <InArgument x:TypeArguments="x:String">["VND"]</InArgument>
+                      </ui:FilterOperationArgument.Operand>
+                    </ui:FilterOperationArgument>
+                    <ui:FilterOperationArgument BooleanOperator="And" Operator="NOTEQ">
+                      <ui:FilterOperationArgument.Column>
+                        <InArgument x:TypeArguments="x:String">["Qty in unit of entry"]</InArgument>
+                      </ui:FilterOperationArgument.Column>
+                      <ui:FilterOperationArgument.Operand>
+                        <InArgument x:TypeArguments="x:Int32">[0]</InArgument>
+                      </ui:FilterOperationArgument.Operand>
+                    </ui:FilterOperationArgument>
+                  </scg:List>
+                </ui:FilterDataTable.Filters>
+                <ui:FilterDataTable.SelectColumns>
+                  <scg:List x:TypeArguments="InArgument" Capacity="4">
+                    <x:Null />
+                  </scg:List>
+                </ui:FilterDataTable.SelectColumns>
+              </ui:FilterDataTable>
+            </Sequence>
+          </TryCatch.Try>
+          <TryCatch.Catches>
+            <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="404.666666666667,21.3333333333333" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="br_exc" />
+                </ActivityAction.Argument>
+                <If Condition="[br_exc.Message = &quot;no_realize_data&quot;]" DisplayName="catch_br_exce_no_realize_data" sap:VirtualizedContainerService.HintSize="508,223.333333333333" sap2010:WorkflowViewState.IdRef="If_10">
+                  <If.Then>
+                    <Assign DisplayName="init_dicRealize" sap:VirtualizedContainerService.HintSize="262,61.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Boolean)">[dicRealizeNumber]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Boolean)">[new Dictionary(of String, Boolean)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </If.Then>
+                  <If.Else>
+                    <Rethrow sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+                  </If.Else>
+                </If>
+              </ActivityAction>
+            </Catch>
+            <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404.666666666667,21.3333333333333" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ActivityAction x:TypeArguments="s:Exception">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                </ActivityAction.Argument>
+                <Rethrow sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Rethrow_2" />
+              </ActivityAction>
+            </Catch>
+          </TryCatch.Catches>
+        </TryCatch>
+      </If.Then>
+      <If.Else>
+        <ui:LogMessage DisplayName="log_progress" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Đã xử lý phần download báo cáo Realization List...&quot;]" />
+      </If.Else>
+    </If>
+    <If Condition="[dicRealizeNumber.Count &gt; 0]" DisplayName="if_realize_list_has_values" sap:VirtualizedContainerService.HintSize="1214.66666666667,4351.33333333333" sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Then>
+        <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:Boolean)" CurrentIndex="{x:Null}" DisplayName="fe_realize_number" sap:VirtualizedContainerService.HintSize="834.666666666667,4189.33333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[dicRealizeNumber]">
+          <ui:ForEach.Body>
+            <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:Boolean)">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="scg:KeyValuePair(x:String, x:Boolean)" Name="realize" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="process_realize_mapping" sap:VirtualizedContainerService.HintSize="798,4052" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If Condition="[_dtaTracking.AsEnumerable.Any(Function (a) a(&quot;state&quot;).ToString = &quot;Prepare&quot; AndAlso a(&quot;request&quot;).ToString = realize.Key)]" DisplayName="check_realize_proceeded" sap:VirtualizedContainerService.HintSize="756,409.333333333333" sap2010:WorkflowViewState.IdRef="If_5">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence DisplayName="log_and_continue" sap:VirtualizedContainerService.HintSize="376,247.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:LogMessage DisplayName="log_processed" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Số realize &quot; &amp; realize.Key  &amp; &quot; đã được xử lý trước đó...&quot;]" />
+                      <ui:Continue DisplayName="Continue" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <ui:LogMessage DisplayName="log_process_as_new" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Kiểm tra &amp; xử lý realize &quot; &amp; realize.Key  &amp; &quot;...&quot;]" />
+                  </If.Else>
+                </If>
+                <If Condition="[realize.value = True]" DisplayName="check_realize_in_backlog" sap:VirtualizedContainerService.HintSize="756,409.333333333333" sap2010:WorkflowViewState.IdRef="If_6">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <ui:LogMessage DisplayName="log_progress" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Realize &quot; &amp; realize.Key &amp; &quot; chưa có trong Backlog. Tiến hành xử lý realize và xuất file import Thái Sơn...&quot;]" />
+                  </If.Then>
+                  <If.Else>
+                    <Sequence DisplayName="log_and_continue" sap:VirtualizedContainerService.HintSize="376,247.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:LogMessage DisplayName="log_progress" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Realize &quot; &amp; realize.Key &amp; &quot; đã được xử lý và ghi lại trong Backlog trước đó. Thực hiện realize kế tiếp...&quot;]" />
+                      <ui:Continue sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Continue_2" />
+                    </Sequence>
+                  </If.Else>
+                </If>
+                <If Condition="[dtaCustomerDefinition is Nothing]" DisplayName="is_dtaCustomerDefinition_valid" sap:VirtualizedContainerService.HintSize="756,671.333333333333" sap2010:WorkflowViewState.IdRef="If_11">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence DisplayName="build_dtaCustomerDefinition" sap:VirtualizedContainerService.HintSize="376,479.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtaCustomerDefinition]" DisplayName="rr_customer_definition_list" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_4" SheetName="Sheet1" WorkbookPath="[Path.Combine(_dicConfig(&quot;INPUTS&quot;).ToString, _dicConfig(&quot;CUSTOMER_DEFINITION_FILE&quot;).ToString)]" />
+                      <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Key" DataTable="[dtaCustomerDefinition]" DisplayName="adc_BP&amp;ProfitCenter" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" />
+                      <ui:ForEach x:TypeArguments="sd:DataRow" CurrentIndex="{x:Null}" DisplayName="fer__dtaCustomerDefinition" sap:VirtualizedContainerService.HintSize="334,198.666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[dtaCustomerDefinition.Rows]">
+                        <ui:ForEach.Body>
+                          <ActivityAction x:TypeArguments="sd:DataRow">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                            </ActivityAction.Argument>
+                            <Assign sap:VirtualizedContainerService.HintSize="262,61.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_2">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Object">[row("Key")]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Object">[row("BP code").ToString &amp; row("Profit Center").ToString]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </ActivityAction>
+                        </ui:ForEach.Body>
+                      </ui:ForEach>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap2010:WorkflowViewState.IdRef="Sequence_18">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </Sequence>
+                  </If.Else>
+                </If>
+                <If Condition="[dtaSpecialItems is Nothing]" DisplayName="is_dtaSpecialItems_valid" sap:VirtualizedContainerService.HintSize="756,278.666666666667" sap2010:WorkflowViewState.IdRef="If_12">
+                  <If.Then>
+                    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtaSpecialItems]" DisplayName="rr_special_list" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_5" SheetName="Sheet1" WorkbookPath="[Path.Combine(_dicConfig(&quot;INPUTS&quot;).ToString, _dicConfig(&quot;SPECIAL_FILE&quot;).ToString)]" />
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap2010:WorkflowViewState.IdRef="Sequence_20">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </Sequence>
+                  </If.Else>
+                </If>
+                <If Condition="[dtaVATReport is Nothing]" DisplayName="is_vat_report_downloaded" sap:VirtualizedContainerService.HintSize="756,624" sap2010:WorkflowViewState.IdRef="If_7">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence DisplayName="download_VAT_report" sap:VirtualizedContainerService.HintSize="376,432" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_navigation" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="wfs\gates\GATES_navigation.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strTransactionCode">[_dicConfig("VAT_REPORT_TX").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:Boolean" x:Key="_boolClosingWindow">False</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_download_VAT_report" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="wfs\gates\GATES_download_VAT_report.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strCompanyCode">[_dicConfig("COMPANY_CODE").ToString]</InArgument>
+                          <InArgument x:TypeArguments="s:DateTime" x:Key="_dtiProcess">[_dtiProcess]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strDownloadFolder">[_dicConfig("DOWNLOAD_FOLDER").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strProcessFolder">[_dicConfig("REPORT_FOLDER").ToString]</InArgument>
+                          <OutArgument x:TypeArguments="x:String" x:Key="_strVATReportPath">[strVATReport]</OutArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtaVATReport]" DisplayName="rr_vat_report" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Sheet1" WorkbookPath="[strVATReport]" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+                <If Condition="[dtaMaterialMaster is Nothing]" DisplayName="is_material_master_downloaded" sap:VirtualizedContainerService.HintSize="756,1148.66666666667" sap2010:WorkflowViewState.IdRef="If_8">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence DisplayName="download_material_master" sap:VirtualizedContainerService.HintSize="476,956.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="ui:WorkbookApplication" Name="wb" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_navigation" sap:VirtualizedContainerService.HintSize="434,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="wfs\gates\GATES_navigation.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strTransactionCode">[_dicConfig("MATERIAL_MASTER_TX").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:Boolean" x:Key="_boolClosingWindow">False</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_download_Material_Master" sap:VirtualizedContainerService.HintSize="434,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="wfs\gates\GATES_download_Material_Master.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="s:DateTime" x:Key="_dtiProcess">[_dtiProcess]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strCompanyCode">[_dicConfig("COMPANY_CODE").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strDownloadFolder">[_dicConfig("DOWNLOAD_FOLDER").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strProcessFolder">[_dicConfig("REPORT_FOLDER").ToString]</InArgument>
+                          <OutArgument x:TypeArguments="x:String" x:Key="_strMaterialMasterReport">[strMaterialMaster]</OutArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_excel_kill" sap:VirtualizedContainerService.HintSize="434,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="wfs\excel\excel_kill.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="eac_material_master" sap:VirtualizedContainerService.HintSize="434,484.666666666667" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="0" Visible="False" Workbook="[wb]" WorkbookPath="[strMaterialMaster]">
+                        <ui:ExcelApplicationScope.Body>
+                          <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                            </ActivityAction.Argument>
+                            <Sequence DisplayName="read_datatable" sap:VirtualizedContainerService.HintSize="376,376" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:InvokeVBA OutputValue="{x:Null}" CodeFilePath="wfs\vba\delete_duplicate_column.bas" DisplayName="ivk_vba_delete_duplicate_column" EntryMethodName="Main" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeVBA_1" />
+                              <ui:ExcelReadRange AddHeaders="True" DataTable="[dtaMaterialMaster]" DisplayName="rr_dtaMaterialMaster" sap:VirtualizedContainerService.HintSize="334,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="Sheet1">
+                                <ui:ExcelReadRange.Range>
+                                  <InArgument x:TypeArguments="x:String">
+                                    <Literal x:TypeArguments="x:String" Value="" />
+                                  </InArgument>
+                                </ui:ExcelReadRange.Range>
+                              </ui:ExcelReadRange>
+                              <ui:ExcelCloseWorkbook DisplayName="close_wb" sap:VirtualizedContainerService.HintSize="334,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_1" Workbook="[wb]" />
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:ExcelApplicationScope.Body>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:ExcelApplicationScope>
+                    </Sequence>
+                  </If.Then>
+                </If>
+                <If Condition="[dtaGrossProfit  is Nothing]" DisplayName="is_gross_profit_downloaded" sap:VirtualizedContainerService.HintSize="756,52" sap2010:WorkflowViewState.IdRef="If_9">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence DisplayName="download_gross_profit" sap:VirtualizedContainerService.HintSize="376,432" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_navigate_DataAnalysis" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="wfs\gates\GATES_navigate_DataAnalysis.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_GATES_download_Gross_Profit" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="wfs\gates\GATES_download_Gross_Profit.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <OutArgument x:TypeArguments="x:String" x:Key="_strGrossProfitBO">[strGrossProfitBOList]</OutArgument>
+                          <InArgument x:TypeArguments="s:DateTime" x:Key="_dtiProcess">[_dtiProcess]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strCompanyCode">[_dicConfig("COMPANY_CODE").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strDownloadFolder">[_dicConfig("DOWNLOAD_FOLDER").ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="_strProcessFolder">[_dicConfig("REPORT_FOLDER").ToString]</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <ui:ReadRange AddHeaders="True" DataTable="[dtaGrossProfit]" DisplayName="rr_GrossProfit" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_3" Range="B2" SheetName="Gross Profit List" WorkbookPath="[strGrossProfitBOList]" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+                <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="ivk_excel_create_import_file" sap:VirtualizedContainerService.HintSize="756,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="wfs\excel\excel_create_realize_import_file.xaml">
+                  <ui:InvokeWorkflowFile.Arguments>
+                    <InArgument x:TypeArguments="x:String" x:Key="_strRealizeNumber">
+                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="realize.Key" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="_strTemplatePath">
+                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="Path.Combine(_dicConfig(&quot;INPUTS&quot;).ToString, _dicConfig(&quot;TEMPLATE_FILE&quot;).ToString)" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="_strUploadFolder">
+                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="_dicConfig(&quot;UPLOAD_FOLDER&quot;).ToString" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaVATReport">
+                      <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtaVATReport" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaMaterialMaster">
+                      <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtaMaterialMaster" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaGrossProfit">
+                      <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtaGrossProfit" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaRealize">
+                      <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtaRealize" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="s:DateTime" x:Key="_dtiProcess">
+                      <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="_dtiProcess" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="_strInvoiceDateFormat">
+                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="_dicConfig(&quot;INVOICE_DATE_FORMAT&quot;).ToString" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaSpecialItems">
+                      <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtaSpecialItems" />
+                    </InArgument>
+                    <InArgument x:TypeArguments="sd:DataTable" x:Key="_dtaCustomerDefinition">
+                      <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="dtaCustomerDefinition" />
+                    </InArgument>
+                    <InOutArgument x:TypeArguments="sd:DataTable" x:Key="_dtaTracking">
+                      <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="_dtaTracking" />
+                    </InOutArgument>
+                  </ui:InvokeWorkflowFile.Arguments>
+                </ui:InvokeWorkflowFile>
+              </Sequence>
+            </ActivityAction>
+          </ui:ForEach.Body>
+        </ui:ForEach>
+      </If.Then>
+      <If.Else>
+        <ui:LogMessage DisplayName="log_progress" sap:VirtualizedContainerService.HintSize="334,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Không có số realize nào cần xử lý ngày &quot; &amp; _dtiProcess.ToString(&quot;dd/MM/yyyy&quot;) &amp; &quot;...&quot;]" />
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>
